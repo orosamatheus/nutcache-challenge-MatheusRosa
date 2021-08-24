@@ -1,0 +1,12 @@
+.container {
+    padding-top: 15px;
+}
+.btn-sm{
+    margin-right: 10px;
+}
+
+h1{
+    display: flex;
+    justify-content: center;
+    
+}
