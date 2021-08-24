@@ -1,11 +1,19 @@
-import React from 'react';
+import { Router } from "react-router-dom";
+import { Routes } from "./routes";
+import { EmployeeProvider } from "./contexts/employee"
+
+import history from './history';
+import GlobalStyle from "./styles/GlobalStyle";
 
 
 function App() {
   return (
-    <div className="App">
-      
-    </div>
+    <EmployeeProvider>
+      <Router history={history}>
+        <Routes />
+        <GlobalStyle />
+      </Router>
+    </EmployeeProvider>
   );
 }
 
