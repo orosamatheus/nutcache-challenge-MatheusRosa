@@ -1,21 +1,33 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { Context } from "../../contexts/employee"
 import { Button, Container, Row, Table } from "react-bootstrap";
 
 import RegisterEmployee from "../../components/RegisterEmployee";
+import DeleteEmployee from "../../components/DeleteEmployee";
+import UpdateEmployee from "../../components/UpdateEmployee";
 
 import "./styles.css"
 
 export default function Home() {
-    const [modalShow, setModalShow] = useState(false);
 
-    const { employees } = useContext(Context)
+    const { 
+        employees, 
+        setRegisterModal, 
+        registerModal,
+        setDeleteModal, 
+        deleteModal,
+        updateModal,
+        setUpdateModal,
+        handleDeleteEmployee,
+        getEmployeeById,
+        taggedEmployee
+     } = useContext(Context)
 
 
     return (
         <Container>
             <Row>
-                <Button variant="primary" onClick={() => setModalShow(true)}>
+                <Button variant="primary" onClick={() => setRegisterModal(true)}>
                     Register employee
                 </Button>
             </Row>
@@ -34,19 +46,27 @@ export default function Home() {
                         </tr>
                     </thead>
                         <tbody>
-                            {employees.map((employee) => {
-                                <tr>
+                            {employees.map((employee: any) => (
+                                <tr key={employee._id}>
                                     <td>{employee.name}</td>
-                                    <td>2020/09/21</td>
-                                    <td>email@email</td>
-                                    <td>02/2021</td>
-                                    <td>Frontend</td>
+                                    <td>{employee.birth}</td>
+                                    <td>{employee.email}</td>
+                                    <td>{employee.startDate}</td>
+                                    <td>{employee.team}</td>
                                     <td>
-                                        <Button variant="primary" size="sm">Edit</Button>
-                                        <Button variant="danger" size="sm">Delete</Button>
+                                        <Button 
+                                        variant="primary" 
+                                        size="sm"
+                                        onClick={() => getEmployeeById(employee._id, "update")}
+                                        >Edit</Button>
+                                        <Button 
+                                        variant="danger" 
+                                        size="sm"
+                                        onClick={() => getEmployeeById(employee._id, "delete")}
+                                        >Delete</Button>
                                     </td>
                                 </tr>
-                            })}
+                            ))}
 
                         </tbody>
                 </Table>
@@ -54,8 +74,17 @@ export default function Home() {
             </Row>
 
             <RegisterEmployee
-                show={modalShow}
-                onHide={() => setModalShow(false)}
+                show={registerModal}
+                onHide={() => setRegisterModal(false)}
+            />
+            <DeleteEmployee
+                show={deleteModal}
+                onHide={() => setDeleteModal(false)}
+                handleDelete={() => handleDeleteEmployee(taggedEmployee.id)}
+            />
+            <UpdateEmployee
+                show={updateModal}
+                onHide={() => setUpdateModal(false)}
             />
         </Container>
     );
