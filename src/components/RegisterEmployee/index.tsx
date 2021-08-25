@@ -63,6 +63,7 @@ export default function RegisterEmployee(props: any) {
                     <Form.Group className="mb-3" controlId="formBasicSelect">
                         <Form.Label>Team</Form.Label>
                         <Form.Control onChange={(e) => setTeam(e.target.value)} as="select">
+                            <option>Enter your Team</option>
                             <option>Mobile</option>
                             <option>Frontend</option>
                             <option>Backend</option>
